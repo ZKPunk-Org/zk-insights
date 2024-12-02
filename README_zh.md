@@ -52,8 +52,8 @@ Bitcoin Optech: https://github.com/bitcoinops/bitcoinops.github.io/tree/master/_
   <h4 align="center">
     感谢各位贡献者的工作!!
   </h4>
-  <a href="https://github.com/Antalpha-Labs/zk-insights/graphs/contributors">
-    <img src="https://contrib.rocks/image?repo=Antalpha-Labs/zk-insights" />
+  <a href="https://github.com/ZKPunk-Org/zk-insights/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=ZKPunk-Org/zk-insights" />
   </a>
 </div>
 

@@ -52,8 +52,8 @@ Newsletter9 Bitcoin Optech that you can learn from: https://github.com/bitcoinop
   <h4 align="center">
     Thank you for all your contributions!!
   </h4>
-  <a href="https://github.com/Antalpha-Labs/zk-insights/graphs/contributors">
-    <img src="https://contrib.rocks/image?repo=Antalpha-Labs/zk-insights" />
+  <a href="https://github.com/ZKPunk-Org/zk-insights/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=ZKPunk-Org/zk-insights" />
   </a>
 </div>
 
