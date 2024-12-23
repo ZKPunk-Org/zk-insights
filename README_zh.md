@@ -61,4 +61,5 @@ Bitcoin Optech: https://github.com/bitcoinops/bitcoinops.github.io/tree/master/_
 
 联系我们：tg @qijinz
 
-每篇周报 Bounty 为 350rmb
+每篇周报 Bounty 为 50usdt,(其中20u给予每期主要贡献者)
+如果你提交了 PR 并被 merged ，请在每周一及之后可以领取bounty，[领取链接](https://according.work/myrewards) 

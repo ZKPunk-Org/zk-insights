@@ -68,8 +68,9 @@ And our YouTube channel
 
 
 
-### 🖐️ Contact
+### 🖐️ Contact & Bounty
 
 Contact us: tg @qijinz
 
-The bounty is 350rmb per weekly report
+The bounty is 50usdt per weekly report!( 20 USDT will go to the main contributor of each.)
+If you submit a PR and it gets merged, please claim your reward at [reward link](https://according.work/myrewards) starting from next Monday.
