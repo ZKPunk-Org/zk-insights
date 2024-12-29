@@ -20,7 +20,7 @@ Nice blogs
 - ZKSECURITY: https://zksecurity.xyz/blog/
 - cryptologie: https://www.cryptologie.net/
 - LambdaClass: https://blog.lambdaclass.com/
-- Mr Zou's blog: https://blog.csdn.net/mutourend?type=blog
+- Zou's blog: https://blog.csdn.net/mutourend?type=blog
 
 **Thesis**: https://eprint.iacr.org/rss/rss.xml Redirected to https://research.zkfold.ing/
 
