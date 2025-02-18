@@ -1,10 +1,13 @@
 ## Highlights
+### NTT as PostQuantum and Starks settlements helper precompile
+- <https://ethresear.ch/t/ntt-as-postquantum-and-starks-settlements-helper-precompile/21775>
 ### Latticefold and lattice-based operations performance report
 - <https://nethermind.notion.site/Latticefold-and-lattice-based-operations-performance-report-153360fc38d080ac930cdeeffed69559>
 ## Updates
 ### AIR-ICICLE : Plonky3 on ICICLE, (part 1)
 - <https://medium.com/@ingonyama/air-icicle-plonky3-on-icicle-part-1-2110d9e86ef9>
-
+### ICICLE V3.5: Sumcheck with Lambda Functions
+- <https://medium.com/@ingonyama/icicle-v3-5-sumcheck-with-lambda-functions-5f17d88910cb>
 ## Papers
 ### “Check-Before-you-Solve”: Verifiable Time-lock Puzzles
 - <https://eprint.iacr.org/2025/225>
