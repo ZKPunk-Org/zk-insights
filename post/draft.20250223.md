@@ -3,6 +3,12 @@
 - <https://ethresear.ch/t/ntt-as-postquantum-and-starks-settlements-helper-precompile/21775>
 ### Latticefold and lattice-based operations performance report
 - <https://nethermind.notion.site/Latticefold-and-lattice-based-operations-performance-report-153360fc38d080ac930cdeeffed69559>
+### Introducing bugs.zksecurity.xyz a knowledge base for ZK bugs
+- <https://www.zksecurity.xyz/blog/posts/zkbugs-website/>
+- <https://bugs.zksecurity.xyz/>
+### Introduction to Programmable Cryptography Workbook
+This is 0xPARC's Introduction to Programmable Cryptography workbook. Its main objective is to help readers follow the book and its concepts. The Jupyter Notebooks directly translate the algorithms and examples mentioned in the book, written in the most straightforward manner possible (i.e., no optimizations).
+- <https://github.com/flyingnobita/0xparc_intro_book_workbook>
 ## Updates
 ### AIR-ICICLE : Plonky3 on ICICLE, (part 1)
 - <https://medium.com/@ingonyama/air-icicle-plonky3-on-icicle-part-1-2110d9e86ef9>
