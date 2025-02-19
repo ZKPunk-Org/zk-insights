@@ -29,6 +29,22 @@ This is 0xPARC's Introduction to Programmable Cryptography workbook. Its main ob
 - <https://eprint.iacr.org/2025/240>
 ### LatticeFold+: Faster, Simpler, Shorter Lattice-Based Folding for Succinct Proof Systems
 - <https://eprint.iacr.org/2025/247>
+### The Round Complexity of Black-Box Post-Quantum Secure Computation
+- <https://eprint.iacr.org/2025/250>
+### Verifiable Streaming Computation and Step-by-Step Zero-Knowledge
+- <https://eprint.iacr.org/2025/251>
+### TFHE Gets Real: an Efficient and Flexible Homomorphic Floating-Point Arithmetic
+- <https://eprint.iacr.org/2025/257>
+### Error-Simulatable Sanitization for TFHE and Applications
+- <https://eprint.iacr.org/2025/275>
+### Improved Resultant Attack against Arithmetization-Oriented Primitives
+- <https://eprint.iacr.org/2025/259>
+### HasteBoots: Proving FHE Bootstrapping in Seconds
+- <https://eprint.iacr.org/2025/261>
+### Transparent SNARKs over Galois Rings
+- <https://eprint.iacr.org/2025/263>
+### Dazzle: Improved Adaptive Threshold Signatures from DDH
+- <https://eprint.iacr.org/2025/264>
 
 ---
 **If you’d like to receive updates via email, subscribe us!
