@@ -1,4 +1,6 @@
 ## Highlights
+### The road to Post-Quantum Ethereum transaction is paved with Account Abstraction (AA)
+- <https://ethresear.ch/t/the-road-to-post-quantum-ethereum-transaction-is-paved-with-account-abstraction-aa/21783>
 ### NTT as PostQuantum and Starks settlements helper precompile
 - <https://ethresear.ch/t/ntt-as-postquantum-and-starks-settlements-helper-precompile/21775>
 ### Latticefold and lattice-based operations performance report
