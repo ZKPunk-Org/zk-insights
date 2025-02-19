@@ -39,6 +39,8 @@ This is 0xPARC's Introduction to Programmable Cryptography workbook. Its main ob
 - <https://eprint.iacr.org/2025/257>
 ### Error-Simulatable Sanitization for TFHE and Applications
 - <https://eprint.iacr.org/2025/275>
+### Transistor: a TFHE-friendly Stream Cipher
+- <https://eprint.iacr.org/2025/282>
 ### Improved Resultant Attack against Arithmetization-Oriented Primitives
 - <https://eprint.iacr.org/2025/259>
 ### HasteBoots: Proving FHE Bootstrapping in Seconds
@@ -47,6 +49,8 @@ This is 0xPARC's Introduction to Programmable Cryptography workbook. Its main ob
 - <https://eprint.iacr.org/2025/263>
 ### Dazzle: Improved Adaptive Threshold Signatures from DDH
 - <https://eprint.iacr.org/2025/264>
+### Context-Dependent Threshold Decryption and its Applications
+- <https://eprint.iacr.org/2025/279>
 
 ---
 **If you’d like to receive updates via email, subscribe us!
