@@ -1,6 +1,8 @@
 ## Highlights
 ### Microsoft unveils Majorana 1, the world’s first quantum processor powered by topological qubits
 - <https://azure.microsoft.com/en-us/blog/quantum/2025/02/19/microsoft-unveils-majorana-1-the-worlds-first-quantum-processor-powered-by-topological-qubits/>
+### After 20 Years, Math Couple Solves Major Group Theory Problem
+- <https://www.quantamagazine.org/after-20-years-math-couple-solves-major-group-theory-problem-20250219/>
 ### The road to Post-Quantum Ethereum transaction is paved with Account Abstraction (AA)
 - <https://ethresear.ch/t/the-road-to-post-quantum-ethereum-transaction-is-paved-with-account-abstraction-aa/21783>
 ### NTT as PostQuantum and Starks settlements helper precompile
