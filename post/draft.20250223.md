@@ -55,6 +55,18 @@ This is 0xPARC's Introduction to Programmable Cryptography workbook. Its main ob
 - <https://eprint.iacr.org/2025/264>
 ### Context-Dependent Threshold Decryption and its Applications
 - <https://eprint.iacr.org/2025/279>
+### Verifiable Computation for Approximate Homomorphic Encryption Schemes
+- <https://eprint.iacr.org/2025/286>
+### How to Securely Implement Cryptography in Deep Neural Networks
+- <https://eprint.iacr.org/2025/288>
+### Dynamic Decentralized Functional Encryption: Generic Constructions with Strong Security
+- <https://eprint.iacr.org/2025/290>
+### Neo: Lattice-based folding scheme for CCS over small fields and pay-per-bit commitments
+- <https://eprint.iacr.org/2025/294>
+### DFS: Delegation-friendly zkSNARK and Private Delegation of Provers
+- <https://eprint.iacr.org/2025/296>
+### Practical Zero-Trust Threshold Signatures in Large-Scale Dynamic Asynchronous Networks
+- <https://eprint.iacr.org/2025/297>
 
 ---
 **If you’d like to receive updates via email, subscribe us!
