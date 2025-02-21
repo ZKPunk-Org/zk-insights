@@ -67,7 +67,20 @@ This is 0xPARC's Introduction to Programmable Cryptography workbook. Its main ob
 - <https://eprint.iacr.org/2025/296>
 ### Practical Zero-Trust Threshold Signatures in Large-Scale Dynamic Asynchronous Networks
 - <https://eprint.iacr.org/2025/297>
-
+### FHE-SNARK vs. SNARK-FHE: From Analysis to Practical Verifiable Computation
+- <https://eprint.iacr.org/2025/302>
+### Lattice-based Cryptography: A survey on the security of the lattice-based NIST finalists
+- <https://eprint.iacr.org/2025/304>
+### Dimensional eROSion: Improving the ROS Attack with Decomposition in Higher Bases
+- <https://eprint.iacr.org/2025/306>
+### Quasi-Linear Indistinguishability Obfuscation via Mathematical Proofs of Equivalence and Applications
+- <https://eprint.iacr.org/2025/307>
+### Non-Interactive Key Exchange: New Notions, New Constructions, and Forward Security
+- <https://eprint.iacr.org/2025/310>
+### Malleable SNARKs and Their Applications
+- <https://eprint.iacr.org/2025/311>
+### Traceable Verifiable Random Functions
+- <https://eprint.iacr.org/2025/312>
 ---
 **If you’d like to receive updates via email, subscribe us!
 
