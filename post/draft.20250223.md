@@ -81,6 +81,13 @@ This is 0xPARC's Introduction to Programmable Cryptography workbook. Its main ob
 - <https://eprint.iacr.org/2025/311>
 ### Traceable Verifiable Random Functions
 - <https://eprint.iacr.org/2025/312>
+### Lattice-based Sigma-Protocols for Polynomial Relations with Standard Soundness
+- <https://eprint.iacr.org/2025/313>
+### Zinc: Succinct Arguments with Small Arithmetization Overheads from IOPs of Proximity to the Integers
+- <https://eprint.iacr.org/2025/316>
+### Traceable Verifiable Secret Sharing and Applications
+- <https://eprint.iacr.org/2025/318>
+
 ---
 **If you’d like to receive updates via email, subscribe us!
 
