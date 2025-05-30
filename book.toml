@@ -4,6 +4,7 @@ language = "en"
 multilingual = false
 src = "post"
 title = "ZKPunk's ZK Insights"
+description = "Sponsored by [GCC](https://www.gccofficial.org/)"
 
 [preprocessor]
 
