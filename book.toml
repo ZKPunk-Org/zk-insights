@@ -44,3 +44,10 @@ level = 0     # the depth to start folding
 
 [output.html.search]
 enable = true
+
+[preprocessor.header-footer]
+command = "mdbook-header-footer"
+after   = ["links"]               # 让它在链接处理后运行
+footer  = [
+{ regex = ".*", padding = "<div class='sponsor'>Sponsored by <a href='https://www.gccofficial.org/'>GCC</a></div>" }
+]
