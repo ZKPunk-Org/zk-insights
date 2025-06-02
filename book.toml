@@ -32,7 +32,7 @@ command = "mdbook-mermaid"
 [output.html]
 mathjax-support = true
 no-section-label = true
-default-theme = "ayu"
+default-theme = "light"
 git-repository-url = "https://github.com/ZKPunk-Org/zk-insights"
 git-repository-icon = "fa-github"
 
