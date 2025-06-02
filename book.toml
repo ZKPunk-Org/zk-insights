@@ -23,5 +23,5 @@ level = 0     # the depth to start folding
 [preprocessor.header-footer]
 headers = [{ regex = ".*", padding = "Edited by <a href='https://zkpunk.pro'>ZKPunk</a>\n" }]
 footers = [
-    {regex = ".*",  padding = "<div style=\"text-align: center;\">🎉&nbsp;Sponsored by&nbsp;<a href=\"https://www.gccofficial.org/\">GCC</a>&nbsp;🎉</div>" }
+    {regex = ".*",  padding = "<div style=\"text-align: center;\">🎉&nbsp;Supported by&nbsp;<a href=\"https://www.gccofficial.org/\">GCC</a>&nbsp;🎉</div>" }
 ]
