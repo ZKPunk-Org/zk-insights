@@ -3,8 +3,7 @@ authors = ["Kurt Pan"]
 language = "en"
 multilingual = false
 src = "post"
-title = "ZKPunk's ZK Insights"
-description = "Sponsored by [GCC](https://www.gccofficial.org/)"
+title = "ZK Insights"
 
 [preprocessor]
 
@@ -45,9 +44,9 @@ level = 0     # the depth to start folding
 [output.html.search]
 enable = true
 
+
 [preprocessor.header-footer]
-command = "mdbook-header-footer"
-after   = ["links"]               # 让它在链接处理后运行
-footer  = [
-{ regex = ".*", padding = "<div class='sponsor'>Sponsored by <a href='https://www.gccofficial.org/'>GCC</a></div>" }
+headers = [{ regex = ".*", padding = "Edited by <a href='https://zkpunk.pro'>ZKPunk</a>\n" }]
+footers = [
+    {regex = ".*",  padding = "<div style=\"text-align: center;\">🎉&nbsp;Sponsored by&nbsp;<a href=\"https://www.gccofficial.org/\">GCC</a>&nbsp;🎉</div>" }
 ]
