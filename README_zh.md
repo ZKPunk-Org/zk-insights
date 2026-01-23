@@ -21,7 +21,9 @@ Blogs
 - LambdaClass：https://blog.lambdaclass.com/
 - 邹老师博客：https://blog.csdn.net/mutourend?type=blog
 
-**论文**： https://eprint.iacr.org/rss/rss.xml 重定向网站： https://research.zkfold.ing/
+**论文**： 
+- https://eprint.iacr.org/rss/rss.xml 重定向网站： https://research.zkfold.ing/
+- SNARKS EXPRESS https://news.snark.express/
 
 可以借鉴的newsletter9
 Bitcoin Optech: https://github.com/bitcoinops/bitcoinops.github.io/tree/master/_posts/zh/newsletters
