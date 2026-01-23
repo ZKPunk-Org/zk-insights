@@ -22,7 +22,8 @@ Nice blogs
 - LambdaClass: https://blog.lambdaclass.com/
 - Zou's blog: https://blog.csdn.net/mutourend?type=blog
 
-**Thesis**: https://eprint.iacr.org/rss/rss.xml Redirected to https://research.zkfold.ing/
+**papers**: 
+- SNARKS EXPRESS https://news.snark.express/
 
 Newsletter9 Bitcoin Optech that you can learn from: https://github.com/bitcoinops/bitcoinops.github.io/tree/master/_posts/zh/newsletters
 
