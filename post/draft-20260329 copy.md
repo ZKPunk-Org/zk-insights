@@ -25,8 +25,12 @@
 
 ## Videos
 
-### 
-Episode 396 - lean Ethereum Part 6: Formal Verification with Alex Hicks
+### Interval-Agnostic Vector Range Argument for Unstructured Range Assertions
+- Hao Gao shared their recent work on Vector Range Arguments, to appear at Eurocrypt 2026
+- paper link <https://eprint.iacr.org/2026/339>
+- <https://youtu.be/faLRzx183As>
+
+### Episode 396 - lean Ethereum Part 6: Formal Verification with Alex Hicks
 - In this episode, Nico Mohnblatt speaks with Alex Hicks from the Ethereum Foundation about formal verification and its role in the lean Ethereum vision. This is the 6th and final episode of the lean Ethereum mini-series. Nico and Alex explore what it means to produce machine-checked proofs across the ZK stack, from RISC-V and zkVMs to circuits, compilers, and cryptographic primitives, and how these pieces connect in practice.
 - <https://youtu.be/9u4fu7TiZCA?si=y3NaiicxP3K3EAJK>
 
