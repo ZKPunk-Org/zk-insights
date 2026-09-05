@@ -1,0 +1,103 @@
+name: PHJ-FRI K14 full re-instantiation
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/phj-fri-stage3-lean]
+    paths:
+      - '.github/workflows/phj-fri-k14-full.yml'
+      - 'research/phj-fri-stage3/k14/**'
+
+permissions:
+  contents: read
+
+jobs:
+  verify-k14-full:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout isolated research branch
+        uses: actions/checkout@v4
+
+      - name: Checkout pinned Proximity Prize workspace
+        uses: actions/checkout@v4
+        with:
+          repository: proximity-prize/proximity-prize
+          ref: b3fac81ad2b1ee609672b04bd3c3ee1ca5c06884
+          path: proximity-prize
+
+      - name: Set up pinned Lean and dependencies
+        uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: proximity-prize
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: auto
+          use-github-cache: true
+
+      - name: Apply fail-closed K14 source patch
+        shell: bash
+        run: |
+          python research/phj-fri-stage3/k14/apply_k14_patch.py proximity-prize \
+            2>&1 | tee k14-patch-output.txt
+
+      - name: Reject sorry placeholders in the patched proof chain
+        shell: bash
+        run: |
+          if grep -RInE '(^|[^A-Za-z])sorry([^A-Za-z]|$)' \
+              proximity-prize/ProximityPrize/SubmissionLower; then
+            echo 'Unexpected sorry placeholder in the proof chain.' >&2
+            exit 1
+          fi
+
+      - name: Build the complete K14 alignment dependency graph
+        shell: bash
+        run: |
+          cd proximity-prize
+          lake build ProximityPrize.SubmissionLower.ContactAlignment6401 \
+            2>&1 | tee ../k14-full-build-output.txt
+
+      - name: Re-run final theorem file and print axioms
+        shell: bash
+        run: |
+          cd proximity-prize
+          lake env lean ProximityPrize/SubmissionLower/ContactAlignment6401.lean \
+            2>&1 | tee ../k14-final-theorem-output.txt
+
+      - name: Kernel-check direct-threshold finish
+        shell: bash
+        run: |
+          cp research/phj-fri-stage3/PHJ_FRI_DirectThreshold.lean \
+             proximity-prize/PHJ_FRI_DirectThreshold.lean
+          cd proximity-prize
+          lake env lean PHJ_FRI_DirectThreshold.lean \
+            2>&1 | tee ../direct-threshold-output.txt
+
+      - name: Record patched proof-source digest
+        shell: bash
+        run: |
+          find proximity-prize/ProximityPrize/SubmissionLower -type f -name '*.lean' -print0 \
+            | sort -z | xargs -0 sha256sum > k14-patched-source-sha256.txt
+
+      - name: Upload K14 verification artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phj-fri-k14-full-verification
+          path: |
+            k14-patch-output.txt
+            k14-full-build-output.txt
+            k14-final-theorem-output.txt
+            direct-threshold-output.txt
+            k14-patched-source-sha256.txt
+            proximity-prize/ProximityPrize/SubmissionLower/ContactAlignmentParameters.lean
+            proximity-prize/ProximityPrize/SubmissionLower/ContactImplicitLiftParameters.lean
+            proximity-prize/ProximityPrize/SubmissionLower/ContactInterpolation.lean
+            proximity-prize/ProximityPrize/SubmissionLower/ContactTranslation.lean
+            proximity-prize/ProximityPrize/SubmissionLower/ContactCountingLedger.lean
+            proximity-prize/ProximityPrize/SubmissionLower/ContactGlobalSelectedFamilies.lean
+            proximity-prize/ProximityPrize/SubmissionLower/ContactFrozenAlignment6401.lean
+            proximity-prize/ProximityPrize/SubmissionLower/ContactAlignment6401.lean
+          if-no-files-found: warn
