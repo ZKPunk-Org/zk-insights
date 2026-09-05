@@ -38,8 +38,11 @@ theorem sum_finrank_quotient_le
     (I : ι → Ideal R) (hI : Pairwise (IsCoprime on I))
     [∀ i, FiniteDimensional K (R ⧸ I i)] :
     (∑ i, Module.finrank K (R ⧸ I i)) ≤ Module.finrank K R := by
-  rw [← Module.finrank_pi_fintype]
-  exact LinearMap.finrank_le_finrank_of_surjective (Ideal.pi_mkQ_surjective hI)
+  let fR : R →ₗ[R] (∀ i, R ⧸ I i) := LinearMap.pi fun i => (I i).mkQ
+  let fK : R →ₗ[K] (∀ i, R ⧸ I i) := fR.restrictScalars K
+  have hf : Function.Surjective fK := by
+    simpa only [fK, fR] using (Ideal.pi_mkQ_surjective hI)
+  exact sum_finrank_le_of_surjective_pi K R (fun i => R ⧸ I i) fK hf
 
 #print axioms sum_finrank_le_of_surjective_pi
 #print axioms sum_finrank_quotient_le
