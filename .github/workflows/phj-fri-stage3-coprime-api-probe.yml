@@ -1,0 +1,69 @@
+name: PHJ-FRI Stage 3 coprime API probe
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - research/phj-fri-stage3-lean
+    paths:
+      - '.github/workflows/phj-fri-stage3-coprime-api-probe.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/checkout@v4
+        with:
+          repository: proximity-prize/proximity-prize
+          ref: b3fac81ad2b1ee609672b04bd3c3ee1ca5c06884
+          path: proximity-prize
+      - uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: proximity-prize
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: auto
+          use-github-cache: true
+      - name: Probe candidate APIs independently
+        shell: bash
+        run: |
+          mkdir -p research/phj-fri-stage3/api-probe
+          cd proximity-prize
+          candidates=(
+            'IsCoprime.dvd_of_dvd_mul_left'
+            'IsCoprime.dvd_of_dvd_mul_right'
+            'IsCoprime.dvd_mul_left'
+            'IsCoprime.dvd_mul_right'
+            'IsCoprime.of_dvd'
+            'isCoprime_iff_gcd_eq_one'
+          )
+          for name in "${candidates[@]}"; do
+            safe=$(echo "$name" | tr '.' '_')
+            cat > Probe.lean <<EOF
+          import Mathlib
+          #check $name
+          EOF
+            if lake env lean Probe.lean > "../research/phj-fri-stage3/api-probe/${safe}.log" 2>&1; then
+              echo PASS > "../research/phj-fri-stage3/api-probe/${safe}.pass"
+            fi
+          done
+          grep -RIn --include='*.lean' 'dvd_of_dvd_mul' Mathlib/Algebra Mathlib/RingTheory \
+            | head -200 > ../research/phj-fri-stage3/api-probe/grep_dvd_of_dvd_mul.txt || true
+          grep -RIn --include='*.lean' 'namespace IsCoprime' Mathlib/Algebra Mathlib/RingTheory \
+            | head -100 > ../research/phj-fri-stage3/api-probe/grep_namespace_iscoprime.txt || true
+      - name: Commit probe results
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add research/phj-fri-stage3/api-probe
+          git commit -m 'ci: record pinned Mathlib coprime API probe [skip ci]' || exit 0
+          git push
