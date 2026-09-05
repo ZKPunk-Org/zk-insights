@@ -12,7 +12,7 @@ permissions:
 jobs:
   verify-abstract-stage3:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 35
     steps:
       - name: Checkout isolated research branch
         uses: actions/checkout@v4
@@ -34,6 +34,12 @@ jobs:
           lint: false
           use-mathlib-cache: auto
           use-github-cache: true
+
+      - name: Build determinant multiplicity dependency
+        shell: bash
+        run: |
+          cd proximity-prize
+          lake build ProximityPrize.SubmissionLower.MatrixRootMultiplicity
 
       - name: Kernel-check abstract Stage 3 files
         shell: bash
