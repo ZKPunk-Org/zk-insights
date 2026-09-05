@@ -67,6 +67,9 @@ jobs:
             PHJ_FRI_ClosedPointResultantLedger.lean \
             PHJ_FRI_FiberComponentLength.lean \
             PHJ_FRI_ClosedPointTowerLength.lean \
+            PHJ_FRI_AggregatePrimeSeedIncidence.lean \
+            PHJ_FRI_CommonFactorSylvester.lean \
+            PHJ_FRI_BigradedKoszulLength.lean \
             PHJ_FRI_DirectThreshold.lean \
             PHJ_FRI_M14_ConditionalArithmetic.lean \
             PHJ_FRI_M14_SharpConditionalArithmetic.lean; do
@@ -95,6 +98,9 @@ jobs:
             PHJ_FRI_ClosedPointResultantLedger.lean \
             PHJ_FRI_FiberComponentLength.lean \
             PHJ_FRI_ClosedPointTowerLength.lean \
+            PHJ_FRI_AggregatePrimeSeedIncidence.lean \
+            PHJ_FRI_CommonFactorSylvester.lean \
+            PHJ_FRI_BigradedKoszulLength.lean \
             PHJ_FRI_DirectThreshold.lean \
             PHJ_FRI_M14_ConditionalArithmetic.lean \
             PHJ_FRI_M14_SharpConditionalArithmetic.lean; do
