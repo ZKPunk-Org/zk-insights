@@ -12,7 +12,7 @@ permissions:
 jobs:
   verify-abstract-stage3:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 45
     steps:
       - name: Checkout isolated research branch
         uses: actions/checkout@v4
@@ -35,13 +35,14 @@ jobs:
           use-mathlib-cache: auto
           use-github-cache: true
 
-      - name: Build determinant and Sylvester dependencies
+      - name: Build determinant, Sylvester, and plane-root dependencies
         shell: bash
         run: |
           cd proximity-prize
           lake build \
             ProximityPrize.SubmissionLower.MatrixRootMultiplicity \
-            ProximityPrize.SubmissionLower.PlaneResultantPointCount
+            ProximityPrize.SubmissionLower.PlaneResultantPointCount \
+            ProximityPrize.SubmissionLower.PlaneRootSeparability
 
       - name: Kernel-check abstract Stage 3 files
         shell: bash
@@ -57,6 +58,7 @@ jobs:
             PHJ_FRI_ClosedPointResultantLedger.lean \
             PHJ_FRI_FiberComponentLength.lean \
             PHJ_FRI_ClosedPointTowerLength.lean \
+            PHJ_FRI_PlaneRootFiniteness.lean \
             PHJ_FRI_M14_ConditionalArithmetic.lean \
             PHJ_FRI_M14_SharpConditionalArithmetic.lean; do
             cp "research/phj-fri-stage3/$f" "proximity-prize/$f"
@@ -73,6 +75,7 @@ jobs:
             PHJ_FRI_ClosedPointResultantLedger.lean \
             PHJ_FRI_FiberComponentLength.lean \
             PHJ_FRI_ClosedPointTowerLength.lean \
+            PHJ_FRI_PlaneRootFiniteness.lean \
             PHJ_FRI_M14_ConditionalArithmetic.lean \
             PHJ_FRI_M14_SharpConditionalArithmetic.lean; do
             lake env lean "$f" 2>&1 | tee "../${f%.lean}.log"
