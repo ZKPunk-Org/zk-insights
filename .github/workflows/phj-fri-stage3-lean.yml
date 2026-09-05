@@ -12,7 +12,7 @@ permissions:
 jobs:
   verify-stage3:
     runs-on: ubuntu-latest
-    timeout-minutes: 55
+    timeout-minutes: 70
     steps:
       - name: Checkout isolated research branch
         uses: actions/checkout@v4
@@ -42,6 +42,7 @@ jobs:
           lake build \
             ProximityPrize.SubmissionLower.CoordinateBoxZeroCount \
             ProximityPrize.SubmissionLower.PlaneResultantPointCount \
+            ProximityPrize.SubmissionLower.ContactPrimeSeedIncidence \
             ProximityPrize.SubmissionLower.BCHKSBridge
 
       - name: Copy Stage 3 modules into pinned workspace
@@ -54,6 +55,9 @@ jobs:
             PHJ_FRI_FrobeniusCoordinate.lean \
             PHJ_FRI_FiniteAlgebraProjection.lean \
             PHJ_FRI_PoleBoundedCoordinate.lean \
+            PHJ_FRI_PoleBoundedModelZeroCount.lean \
+            PHJ_FRI_ActualCurvePoleZeroCount.lean \
+            PHJ_FRI_ContactPrimeSeedIncidencePole.lean \
             PHJ_FRI_SylvesterQuotientLength.lean \
             PHJ_FRI_ResultantFiberLength.lean \
             PHJ_FRI_ResultantMultiplicityLedger.lean \
@@ -74,6 +78,9 @@ jobs:
             PHJ_FRI_FrobeniusCoordinate.lean \
             PHJ_FRI_FiniteAlgebraProjection.lean \
             PHJ_FRI_PoleBoundedCoordinate.lean \
+            PHJ_FRI_PoleBoundedModelZeroCount.lean \
+            PHJ_FRI_ActualCurvePoleZeroCount.lean \
+            PHJ_FRI_ContactPrimeSeedIncidencePole.lean \
             PHJ_FRI_SylvesterQuotientLength.lean \
             PHJ_FRI_ResultantFiberLength.lean \
             PHJ_FRI_ResultantMultiplicityLedger.lean \
