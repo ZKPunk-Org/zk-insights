@@ -28,14 +28,13 @@ theorem isSeparable_of_finrank_lt_expChar
     (p : ℕ) [ExpChar F p] (hp : 1 < p)
     (hdegree : Module.finrank F E < p) :
     Algebra.IsSeparable F E := by
-  rw [Field.isSeparable_iff_finInsepDegree_eq_one]
+  rw [isSeparable_iff_finInsepDegree_eq_one]
   obtain ⟨r, hr⟩ := Field.finInsepDegree_eq_pow F E p
   rw [hr]
   by_cases hzero : r = 0
   · simp [hzero]
   · exfalso
     obtain ⟨r', rfl⟩ := Nat.exists_eq_succ_of_ne_zero hzero
-    have hp0 : 0 < p := lt_trans Nat.zero_lt_one hp
     have hone : 1 ≤ p ^ r' := one_le_pow₀ hp.le
     have hp_le_pow : p ≤ p ^ (r' + 1) := by
       rw [pow_succ]
