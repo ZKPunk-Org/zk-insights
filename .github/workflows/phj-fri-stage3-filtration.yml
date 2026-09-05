@@ -1,0 +1,57 @@
+name: PHJ-FRI Stage 3 filtration and Koszul core
+
+on:
+  push:
+    branches:
+      - research/phj-fri-stage3-lean
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-filtration-koszul:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: proximity-prize/proximity-prize
+          ref: b3fac81ad2b1ee609672b04bd3c3ee1ca5c06884
+          path: proximity-prize
+      - uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: proximity-prize
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: auto
+          use-github-cache: true
+      - name: Kernel-check filtration and Koszul modules
+        run: |
+          for f in \
+            PHJ_FRI_BigradedKoszulLength.lean \
+            PHJ_FRI_FiniteFiltrationSurjection.lean; do
+            cp "research/phj-fri-stage3/$f" "proximity-prize/$f"
+          done
+          cd proximity-prize
+          for f in \
+            PHJ_FRI_BigradedKoszulLength.lean \
+            PHJ_FRI_FiniteFiltrationSurjection.lean; do
+            lake env lean "$f" 2>&1 | tee "../${f%.lean}.log"
+          done
+      - name: Reject sorry placeholders
+        run: |
+          if grep -nE '(^|[^A-Za-z])sorry([^A-Za-z]|$)' \
+              research/phj-fri-stage3/PHJ_FRI_BigradedKoszulLength.lean \
+              research/phj-fri-stage3/PHJ_FRI_FiniteFiltrationSurjection.lean; then
+            exit 1
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: phj-fri-stage3-filtration-koszul-logs
+          path: '*.log'
+          if-no-files-found: warn
