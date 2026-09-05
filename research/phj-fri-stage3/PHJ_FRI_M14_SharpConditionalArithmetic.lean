@@ -36,49 +36,49 @@ abbrev fieldBudgetMargin : ℕ := 156556771725848
 
 /-- The profile partitions the evaluation domain. -/
 theorem partition : agreement + errors = n := by
-  native_decide
+  norm_num [agreement, errors, n]
 
 /-- Strict nonzero interpolation kernel. -/
 theorem interpolation_slack_exact :
     coefficientCount - globalRankBound = interpolationSlack := by
-  native_decide
+  norm_num [coefficientCount, globalRankBound, interpolationSlack]
 
 /-- Exact post-Johnson crossing. -/
 theorem beyond_finite_johnson : agreement * agreement < n * w := by
-  native_decide
+  norm_num [agreement, n, w]
 
 /-- The seed projection is small enough for the one-anchor separability gate. -/
 theorem seed_projection_gate : seedProjectionDegree < characteristic := by
-  native_decide
+  norm_num [seedProjectionDegree, characteristic]
 
 /-- This records, rather than hides, the old proof obstruction. -/
 theorem old_R_projection_gate_fails : characteristic ≤ oldRProjectionDegree := by
-  native_decide
+  norm_num [characteristic, oldRProjectionDegree]
 
 /-- `alignmentBudget` is the least strict integer above `numerator / gap²`. -/
 theorem budget_lower :
     (alignmentBudget - 1) * gapSq ≤ numerator := by
-  native_decide
+  norm_num [alignmentBudget, gapSq, numerator]
 
 theorem budget_strict : numerator < alignmentBudget * gapSq := by
-  native_decide
+  norm_num [numerator, alignmentBudget, gapSq]
 
 /-- The uninflated M14 budget fits the fixed 128-bit challenge-field gate. -/
 theorem field_budget_exact :
     fieldBudget128 - alignmentBudget = fieldBudgetMargin := by
-  native_decide
+  norm_num [fieldBudget128, alignmentBudget, fieldBudgetMargin]
 
 theorem challenge_field_gate : alignmentBudget ≤ fieldBudget128 := by
-  native_decide
+  norm_num [alignmentBudget, fieldBudget128]
 
 theorem challenge_field_gate_expanded :
     2 ^ 129 * alignmentBudget ≤ characteristic ^ extensionDegree := by
-  native_decide
+  norm_num [alignmentBudget, characteristic, extensionDegree]
 
 /-- A common pencil with this many selected seeds is enough for zero-loss
     support lifting via `(t-1)b ≤ t e`. -/
 theorem direct_threshold_seed_count : errors + 2 = 77261 := by
-  native_decide
+  norm_num [errors]
 
 #print axioms partition
 #print axioms interpolation_slack_exact
