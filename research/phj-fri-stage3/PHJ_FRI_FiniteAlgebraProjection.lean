@@ -4,7 +4,7 @@ import Mathlib
 # Finite-algebra projection budgets
 
 A characteristic-free projection-degree argument should count scheme length,
-not geometric embeddings.  This file kernel-checks the linear-algebra/CRT
+not geometric embeddings. This file kernel-checks the linear-algebra/CRT
 part: pairwise coprime component ideals consume at most the dimension of the
 ambient finite algebra.
 -/
@@ -12,6 +12,7 @@ ambient finite algebra.
 namespace PHJFRI.Stage3.FiniteAlgebraProjection
 
 open scoped BigOperators
+open Function
 
 noncomputable section
 
@@ -33,11 +34,10 @@ theorem sum_finrank_le_of_surjective_pi
     a surjection to the product of their quotient algebras, so their total
     quotient dimension is at most the ambient finite-algebra dimension. -/
 theorem sum_finrank_quotient_le
-    {ι : Type*} [Finite ι]
+    {ι : Type*} [Fintype ι]
     (I : ι → Ideal R) (hI : Pairwise (IsCoprime on I))
     [∀ i, FiniteDimensional K (R ⧸ I i)] :
     (∑ i, Module.finrank K (R ⧸ I i)) ≤ Module.finrank K R := by
-  letI : Fintype ι := Fintype.ofFinite ι
   rw [← Module.finrank_pi_fintype]
   exact LinearMap.finrank_le_finrank_of_surjective (Ideal.pi_mkQ_surjective hI)
 
