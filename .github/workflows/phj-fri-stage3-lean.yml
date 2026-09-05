@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  verify-k14:
+  verify-stage3:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -43,18 +43,30 @@ jobs:
           cd proximity-prize
           lake env lean PHJ_FRI_K14_Arithmetic.lean 2>&1 | tee ../k14-lean-output.txt
 
-      - name: Reject sorry placeholders in the certificate
+      - name: Kernel-check seed-anchored lemmas
         shell: bash
         run: |
-          if grep -nE '(^|[^A-Za-z])sorry([^A-Za-z]|$)' research/phj-fri-stage3/PHJ_FRI_K14_Arithmetic.lean; then
+          cp research/phj-fri-stage3/PHJ_FRI_SeedAnchored.lean \
+             proximity-prize/PHJ_FRI_SeedAnchored.lean
+          cd proximity-prize
+          lake env lean PHJ_FRI_SeedAnchored.lean 2>&1 | tee ../seed-anchored-lean-output.txt
+
+      - name: Reject sorry placeholders
+        shell: bash
+        run: |
+          if grep -nE '(^|[^A-Za-z])sorry([^A-Za-z]|$)' \
+              research/phj-fri-stage3/PHJ_FRI_K14_Arithmetic.lean \
+              research/phj-fri-stage3/PHJ_FRI_SeedAnchored.lean; then
             echo 'Unexpected sorry placeholder found.' >&2
             exit 1
           fi
 
-      - name: Upload verification log
+      - name: Upload verification logs
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: phj-fri-k14-lean-log
-          path: k14-lean-output.txt
+          name: phj-fri-stage3-lean-logs
+          path: |
+            k14-lean-output.txt
+            seed-anchored-lean-output.txt
           if-no-files-found: warn
