@@ -40,9 +40,15 @@ theorem sum_finrank_quotient_le
     (∑ i, Module.finrank K (R ⧸ I i)) ≤ Module.finrank K R := by
   let fR : R →ₗ[R] (∀ i, R ⧸ I i) := LinearMap.pi fun i => (I i).mkQ
   let fK : R →ₗ[K] (∀ i, R ⧸ I i) := fR.restrictScalars K
-  have hf : Function.Surjective fK := by
-    simpa only [fK, fR] using (Ideal.pi_mkQ_surjective hI)
-  exact sum_finrank_le_of_surjective_pi K R (fun i => R ⧸ I i) fK hf
+  have hfR : Function.Surjective fR := by
+    simpa only [fR] using (Ideal.pi_mkQ_surjective hI)
+  have hfK : Function.Surjective fK := by
+    intro y
+    obtain ⟨x, hx⟩ := hfR y
+    refine ⟨x, ?_⟩
+    change fR x = y
+    exact hx
+  exact sum_finrank_le_of_surjective_pi K R (fun i => R ⧸ I i) fK hfK
 
 #print axioms sum_finrank_le_of_surjective_pi
 #print axioms sum_finrank_quotient_le
