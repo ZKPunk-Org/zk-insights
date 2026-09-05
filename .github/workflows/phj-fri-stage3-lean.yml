@@ -42,6 +42,7 @@ jobs:
           lake build \
             ProximityPrize.SubmissionLower.CoordinateBoxZeroCount \
             ProximityPrize.SubmissionLower.PlaneResultantPointCount \
+            ProximityPrize.SubmissionLower.MatrixRootMultiplicity \
             ProximityPrize.SubmissionLower.ContactPrimeSeedIncidence \
             ProximityPrize.SubmissionLower.BCHKSBridge
 
@@ -61,6 +62,7 @@ jobs:
             PHJ_FRI_SylvesterQuotientLength.lean \
             PHJ_FRI_ResultantFiberLength.lean \
             PHJ_FRI_ResultantMultiplicityLedger.lean \
+            PHJ_FRI_IrreducibleFactorMultiplicity.lean \
             PHJ_FRI_DirectThreshold.lean \
             PHJ_FRI_M14_ConditionalArithmetic.lean \
             PHJ_FRI_M14_SharpConditionalArithmetic.lean; do
@@ -84,6 +86,7 @@ jobs:
             PHJ_FRI_SylvesterQuotientLength.lean \
             PHJ_FRI_ResultantFiberLength.lean \
             PHJ_FRI_ResultantMultiplicityLedger.lean \
+            PHJ_FRI_IrreducibleFactorMultiplicity.lean \
             PHJ_FRI_DirectThreshold.lean \
             PHJ_FRI_M14_ConditionalArithmetic.lean \
             PHJ_FRI_M14_SharpConditionalArithmetic.lean; do
