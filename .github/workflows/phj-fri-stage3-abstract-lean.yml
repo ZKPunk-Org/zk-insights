@@ -59,6 +59,7 @@ jobs:
             PHJ_FRI_FiberComponentLength.lean \
             PHJ_FRI_ClosedPointTowerLength.lean \
             PHJ_FRI_PlaneRootFiniteness.lean \
+            PHJ_FRI_BigradedKoszulLength.lean \
             PHJ_FRI_M14_ConditionalArithmetic.lean \
             PHJ_FRI_M14_SharpConditionalArithmetic.lean; do
             cp "research/phj-fri-stage3/$f" "proximity-prize/$f"
@@ -76,6 +77,7 @@ jobs:
             PHJ_FRI_FiberComponentLength.lean \
             PHJ_FRI_ClosedPointTowerLength.lean \
             PHJ_FRI_PlaneRootFiniteness.lean \
+            PHJ_FRI_BigradedKoszulLength.lean \
             PHJ_FRI_M14_ConditionalArithmetic.lean \
             PHJ_FRI_M14_SharpConditionalArithmetic.lean; do
             lake env lean "$f" 2>&1 | tee "../${f%.lean}.log"
