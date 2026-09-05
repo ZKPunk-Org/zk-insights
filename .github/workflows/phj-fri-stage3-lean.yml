@@ -57,6 +57,7 @@ jobs:
           cp research/phj-fri-stage3/PHJ_FRI_AnchoredBoxZeroCount.lean \
              proximity-prize/PHJ_FRI_AnchoredBoxZeroCount.lean
           cd proximity-prize
+          lake build ProximityPrize.SubmissionLower.CoordinateBoxZeroCount
           lake env lean PHJ_FRI_AnchoredBoxZeroCount.lean 2>&1 | tee ../anchored-zero-count-output.txt
 
       - name: Reject sorry placeholders
