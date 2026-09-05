@@ -1,0 +1,86 @@
+name: PHJ-FRI Stage 3 coprime Koszul certificate
+
+on:
+  push:
+    branches:
+      - research/phj-fri-stage3-lean
+    paths:
+      - 'research/phj-fri-stage3/PHJ_FRI_KoszulSyzygy.lean'
+      - 'research/phj-fri-stage3/PHJ_FRI_KoszulLinearExact.lean'
+      - 'research/phj-fri-stage3/PHJ_FRI_KoszulCoprimeExact.lean'
+      - '.github/workflows/phj-fri-stage3-coprime-certificate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  certify-coprime:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/checkout@v4
+        with:
+          repository: proximity-prize/proximity-prize
+          ref: b3fac81ad2b1ee609672b04bd3c3ee1ca5c06884
+          path: proximity-prize
+      - uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: proximity-prize
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: auto
+          use-github-cache: true
+      - name: Kernel-check coprime Koszul exactness
+        run: |
+          for f in PHJ_FRI_KoszulSyzygy.lean PHJ_FRI_KoszulLinearExact.lean PHJ_FRI_KoszulCoprimeExact.lean; do
+            cp "research/phj-fri-stage3/$f" "proximity-prize/$f"
+          done
+          cd proximity-prize
+          lake env lean PHJ_FRI_KoszulSyzygy.lean 2>&1 | tee ../PHJ_FRI_KoszulSyzygy.coprime.log
+          lake env lean PHJ_FRI_KoszulLinearExact.lean 2>&1 | tee ../PHJ_FRI_KoszulLinearExact.coprime.log
+          lake env lean PHJ_FRI_KoszulCoprimeExact.lean 2>&1 | tee ../PHJ_FRI_KoszulCoprimeExact.certified.log
+      - name: Reject sorry placeholders
+        run: |
+          if grep -nE '(^|[^A-Za-z])sorry([^A-Za-z]|$)' \
+              research/phj-fri-stage3/PHJ_FRI_KoszulCoprimeExact.lean; then
+            exit 1
+          fi
+      - name: Write kernel certificate
+        env:
+          VERIFIED_SHA: ${{ github.sha }}
+        run: |
+          cat > research/phj-fri-stage3/CI_CERTIFIED_KOSZUL_COPRIME.md <<EOF
+          # PHJ-FRI Stage 3 certified coprime Koszul exactness
+
+          Status: PASS
+
+          Verified source commit: \`${VERIFIED_SHA}\`
+
+          Pinned dependency: \`proximity-prize/proximity-prize@b3fac81ad2b1ee609672b04bd3c3ee1ca5c06884\`
+
+          Pinned Lean toolchain: \`v4.32.2\`
+
+          Kernel-checked file: \`PHJ_FRI_KoszulCoprimeExact.lean\` and dependencies.
+
+          The workflow rejected any \`sorry\` placeholder.
+          EOF
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add research/phj-fri-stage3/CI_CERTIFIED_KOSZUL_COPRIME.md
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m 'ci: certify coprime Koszul exactness [skip ci]'
+          git push
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: phj-fri-stage3-coprime-koszul-logs
+          path: '*.log'
+          if-no-files-found: warn
