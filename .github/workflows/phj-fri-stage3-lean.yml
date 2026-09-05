@@ -1,0 +1,60 @@
+name: PHJ-FRI Stage 3 Lean verification
+
+on:
+  push:
+    branches:
+      - research/phj-fri-stage3-lean
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-k14:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout isolated research branch
+        uses: actions/checkout@v4
+
+      - name: Checkout pinned Proximity Prize workspace
+        uses: actions/checkout@v4
+        with:
+          repository: proximity-prize/proximity-prize
+          ref: b3fac81ad2b1ee609672b04bd3c3ee1ca5c06884
+          path: proximity-prize
+
+      - name: Set up pinned Lean and dependencies
+        uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: proximity-prize
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: auto
+          use-github-cache: true
+
+      - name: Kernel-check K14 arithmetic certificate
+        shell: bash
+        run: |
+          cp research/phj-fri-stage3/PHJ_FRI_K14_Arithmetic.lean \
+             proximity-prize/PHJ_FRI_K14_Arithmetic.lean
+          cd proximity-prize
+          lake env lean PHJ_FRI_K14_Arithmetic.lean 2>&1 | tee ../k14-lean-output.txt
+
+      - name: Reject sorry placeholders in the certificate
+        shell: bash
+        run: |
+          if grep -nE '(^|[^A-Za-z])sorry([^A-Za-z]|$)' research/phj-fri-stage3/PHJ_FRI_K14_Arithmetic.lean; then
+            echo 'Unexpected sorry placeholder found.' >&2
+            exit 1
+          fi
+
+      - name: Upload verification log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phj-fri-k14-lean-log
+          path: k14-lean-output.txt
+          if-no-files-found: warn
