@@ -36,49 +36,49 @@ abbrev fieldBudget128 : ℕ := 137490364055697543
 /-- The contact interpolation space still has a strict nonzero kernel. -/
 theorem interpolation_slack_exact :
     coefficientCount - globalRankBound = interpolationSlack := by
-  native_decide
+  norm_num [coefficientCount, globalRankBound, interpolationSlack]
 
 /-- Agreement is strictly below the finite-length Johnson square threshold. -/
 theorem beyond_johnson_exact :
     agreement * agreement < n * w := by
-  native_decide
+  norm_num [agreement, n, w]
 
 /-- The old all-coordinate proof fails exactly at the R projection. -/
 theorem old_R_gate_fails : characteristic ≤ deltaR := by
-  native_decide
+  norm_num [characteristic, deltaR]
 
 /-- The seed projection remains safely below the characteristic. -/
 theorem seed_gate_passes : deltaZ < characteristic := by
-  native_decide
+  norm_num [deltaZ, characteristic]
 
 /-- Conservative vertical components are charged by the aggregate Y+R
     coordinate mass, with no hidden rounding. -/
 theorem vertical_correction_exact :
     verticalCorrection = gapSq * (deltaY + deltaR) := by
-  native_decide
+  norm_num [verticalCorrection, gapSq, deltaY, deltaR]
 
 /-- Corrected numerator after the vertical charge. -/
 theorem corrected_numerator_exact :
     correctedNumerator = oldNumerator + verticalCorrection := by
-  native_decide
+  norm_num [correctedNumerator, oldNumerator, verticalCorrection]
 
 /-- `correctedBudget` is the least strict integer budget above the corrected
     normalized numerator. -/
 theorem corrected_budget_lower :
     (correctedBudget - 1) * gapSq ≤ correctedNumerator := by
-  native_decide
+  norm_num [correctedBudget, gapSq, correctedNumerator]
 
 theorem corrected_budget_strict :
     correctedNumerator < correctedBudget * gapSq := by
-  native_decide
+  norm_num [correctedNumerator, correctedBudget, gapSq]
 
 /-- The corrected M14 budget still fits the 128-bit challenge-field gate. -/
 theorem corrected_field_gate : correctedBudget ≤ fieldBudget128 := by
-  native_decide
+  norm_num [correctedBudget, fieldBudget128]
 
 theorem field_gate_expanded :
     2 ^ 129 * correctedBudget ≤ characteristic ^ extensionDegree := by
-  native_decide
+  norm_num [correctedBudget, characteristic, extensionDegree]
 
 #print axioms interpolation_slack_exact
 #print axioms beyond_johnson_exact
