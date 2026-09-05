@@ -4,8 +4,8 @@ import Mathlib
 # Resultant-multiplicity and component-incidence ledger
 
 This file isolates the arithmetic interface required from the missing
-geometric backend.  Component pole masses may already include inseparable
-image multiplicities or nonreduced quotient lengths.  Once their aggregate
+geometric backend. Component pole masses may already include inseparable
+image multiplicities or nonreduced quotient lengths. Once their aggregate
 masses are bounded, the proper-cut incidence ledger composes without any
 coordinate-wise separability assumption.
 -/
@@ -15,7 +15,7 @@ namespace PHJFRI.Stage3.ResultantMultiplicityLedger
 open scoped BigOperators
 
 /-- Componentwise box-zero/incidence estimates aggregate against total pole
-    budgets.  This is the exact arithmetic shape used by the contact proof. -/
+    budgets. This is the exact arithmetic shape used by the contact proof. -/
 theorem aggregate_component_incidence
     {I : Type*} [Fintype I]
     (q dY dR dZ : I → ℕ)
@@ -45,6 +45,24 @@ theorem aggregate_component_incidence
       (Nat.mul_le_mul_left cZ hZ)
   have hseed : (e + 1) * gap * SZ ≤ (e + 1) * gap * deltaZ :=
     Nat.mul_le_mul_left ((e + 1) * gap) hZ
+  have hCY : (∑ i, cY * dY i) = cY * SY := by
+    simp only [SY, Finset.mul_sum]
+  have hCR : (∑ i, cR * dR i) = cR * SR := by
+    simp only [SR, Finset.mul_sum]
+  have hCZ : (∑ i, cZ * dZ i) = cZ * SZ := by
+    simp only [SZ, Finset.mul_sum]
+  have hinner :
+      (∑ i, (cY * dY i + cR * dR i + cZ * dZ i)) =
+        cY * SY + cR * SR + cZ * SZ := by
+    rw [Finset.sum_add_distrib, Finset.sum_add_distrib, hCY, hCR, hCZ]
+  have hn :
+      (∑ i, n * (cY * dY i + cR * dR i + cZ * dZ i)) =
+        n * (cY * SY + cR * SR + cZ * SZ) := by
+    rw [← Finset.mul_sum, hinner]
+  have hs :
+      (∑ i, (e + 1) * gap * dZ i) = (e + 1) * gap * SZ := by
+    change (∑ i, ((e + 1) * gap) * dZ i) = ((e + 1) * gap) * SZ
+    rw [← Finset.mul_sum]
   calc
     (∑ i, q i) * gap = ∑ i, q i * gap := by
       rw [Finset.sum_mul]
@@ -52,15 +70,13 @@ theorem aggregate_component_incidence
           (e + 1) * gap * dZ i) := hsum
     _ = n * (cY * SY + cR * SR + cZ * SZ) +
           (e + 1) * gap * SZ := by
-      simp only [SY, SR, SZ, Finset.sum_add_distrib, Finset.mul_sum]
-      ring_nf
+      rw [Finset.sum_add_distrib, hn, hs]
     _ ≤ n * (cY * deltaY + cR * deltaR + cZ * deltaZ) +
           (e + 1) * gap * deltaZ :=
       Nat.add_le_add (Nat.mul_le_mul_left n hbox) hseed
 
 /-- A finite family of image factors, each carrying an inseparable or
-    scheme-theoretic multiplicity, consumes a resultant degree budget.  This
-    wrapper simply exposes the corresponding weighted pole mass. -/
+    scheme-theoretic multiplicity, consumes a resultant degree budget. -/
 theorem weighted_image_degree_le
     {I : Type*} [Fintype I]
     (multiplicity imageDegree : I → ℕ) (resultantDegree : ℕ)
@@ -68,8 +84,8 @@ theorem weighted_image_degree_le
     (∑ i, multiplicity i * imageDegree i) ≤ resultantDegree :=
   hresultant
 
-/-- If every vertical component consumes at least one unit of weighted
-    non-seed coordinate mass, its cardinality is charged to that mass. -/
+/-- If every vertical curve has at least one unit of weighted non-seed
+    coordinate mass, its cardinality is charged to that mass. -/
 theorem vertical_count_le_weighted_mass
     {I : Type*} [Fintype I]
     (multiplicity dY dR : I → ℕ)
