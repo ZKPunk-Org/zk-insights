@@ -51,12 +51,21 @@ jobs:
           cd proximity-prize
           lake env lean PHJ_FRI_SeedAnchored.lean 2>&1 | tee ../seed-anchored-lean-output.txt
 
+      - name: Kernel-check one-anchor zero count
+        shell: bash
+        run: |
+          cp research/phj-fri-stage3/PHJ_FRI_AnchoredBoxZeroCount.lean \
+             proximity-prize/PHJ_FRI_AnchoredBoxZeroCount.lean
+          cd proximity-prize
+          lake env lean PHJ_FRI_AnchoredBoxZeroCount.lean 2>&1 | tee ../anchored-zero-count-output.txt
+
       - name: Reject sorry placeholders
         shell: bash
         run: |
           if grep -nE '(^|[^A-Za-z])sorry([^A-Za-z]|$)' \
               research/phj-fri-stage3/PHJ_FRI_K14_Arithmetic.lean \
-              research/phj-fri-stage3/PHJ_FRI_SeedAnchored.lean; then
+              research/phj-fri-stage3/PHJ_FRI_SeedAnchored.lean \
+              research/phj-fri-stage3/PHJ_FRI_AnchoredBoxZeroCount.lean; then
             echo 'Unexpected sorry placeholder found.' >&2
             exit 1
           fi
@@ -69,4 +78,5 @@ jobs:
           path: |
             k14-lean-output.txt
             seed-anchored-lean-output.txt
+            anchored-zero-count-output.txt
           if-no-files-found: warn
