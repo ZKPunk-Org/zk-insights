@@ -35,6 +35,12 @@ jobs:
           use-mathlib-cache: auto
           use-github-cache: true
 
+      - name: Build pinned PHJ-FRI dependencies
+        shell: bash
+        run: |
+          cd proximity-prize
+          lake build ProximityPrize.SubmissionLower.CoordinateBoxZeroCount
+
       - name: Kernel-check K14 arithmetic certificate
         shell: bash
         run: |
@@ -57,8 +63,23 @@ jobs:
           cp research/phj-fri-stage3/PHJ_FRI_AnchoredBoxZeroCount.lean \
              proximity-prize/PHJ_FRI_AnchoredBoxZeroCount.lean
           cd proximity-prize
-          lake build ProximityPrize.SubmissionLower.CoordinateBoxZeroCount
           lake env lean PHJ_FRI_AnchoredBoxZeroCount.lean 2>&1 | tee ../anchored-zero-count-output.txt
+
+      - name: Kernel-check Frobenius-coordinate pole budget
+        shell: bash
+        run: |
+          cp research/phj-fri-stage3/PHJ_FRI_FrobeniusCoordinate.lean \
+             proximity-prize/PHJ_FRI_FrobeniusCoordinate.lean
+          cd proximity-prize
+          lake env lean PHJ_FRI_FrobeniusCoordinate.lean 2>&1 | tee ../frobenius-coordinate-output.txt
+
+      - name: Kernel-check finite-algebra projection budget
+        shell: bash
+        run: |
+          cp research/phj-fri-stage3/PHJ_FRI_FiniteAlgebraProjection.lean \
+             proximity-prize/PHJ_FRI_FiniteAlgebraProjection.lean
+          cd proximity-prize
+          lake env lean PHJ_FRI_FiniteAlgebraProjection.lean 2>&1 | tee ../finite-algebra-output.txt
 
       - name: Reject sorry placeholders
         shell: bash
@@ -66,7 +87,9 @@ jobs:
           if grep -nE '(^|[^A-Za-z])sorry([^A-Za-z]|$)' \
               research/phj-fri-stage3/PHJ_FRI_K14_Arithmetic.lean \
               research/phj-fri-stage3/PHJ_FRI_SeedAnchored.lean \
-              research/phj-fri-stage3/PHJ_FRI_AnchoredBoxZeroCount.lean; then
+              research/phj-fri-stage3/PHJ_FRI_AnchoredBoxZeroCount.lean \
+              research/phj-fri-stage3/PHJ_FRI_FrobeniusCoordinate.lean \
+              research/phj-fri-stage3/PHJ_FRI_FiniteAlgebraProjection.lean; then
             echo 'Unexpected sorry placeholder found.' >&2
             exit 1
           fi
@@ -80,4 +103,6 @@ jobs:
             k14-lean-output.txt
             seed-anchored-lean-output.txt
             anchored-zero-count-output.txt
+            frobenius-coordinate-output.txt
+            finite-algebra-output.txt
           if-no-files-found: warn
