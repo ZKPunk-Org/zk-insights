@@ -53,7 +53,7 @@ theorem aggregate_component_incidence
     _ = n * (cY * SY + cR * SR + cZ * SZ) +
           (e + 1) * gap * SZ := by
       simp only [SY, SR, SZ, Finset.sum_add_distrib, Finset.mul_sum]
-      ring
+      ring_nf
     _ ≤ n * (cY * deltaY + cR * deltaR + cZ * deltaZ) +
           (e + 1) * gap * deltaZ :=
       Nat.add_le_add (Nat.mul_le_mul_left n hbox) hseed
