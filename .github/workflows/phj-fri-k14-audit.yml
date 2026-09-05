@@ -1,0 +1,31 @@
+name: PHJ-FRI K14 parameter audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/phj-fri-stage3-lean]
+    paths:
+      - '.github/workflows/phj-fri-k14-audit.yml'
+      - 'research/phj-fri-stage3/k14/**'
+
+permissions:
+  contents: read
+
+jobs:
+  audit-k14-hardcodings:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: proximity-prize/proximity-prize
+          ref: b3fac81ad2b1ee609672b04bd3c3ee1ca5c06884
+      - name: Locate frozen numerical assumptions
+        shell: bash
+        run: |
+          set -o pipefail
+          grep -RInE '185354|76790|54283|2409602|12048010|49960|13096794720|18\)|169\)|≤ 18|≤ 3|≤ 169|= 18|= 3|= 169' ProximityPrize/SubmissionLower \
+            | tee k14-hardcodings.txt || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: k14-hardcodings
+          path: k14-hardcodings.txt
