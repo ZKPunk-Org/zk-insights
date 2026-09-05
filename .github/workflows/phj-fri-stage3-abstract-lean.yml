@@ -12,7 +12,7 @@ permissions:
 jobs:
   verify-abstract-stage3:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 40
     steps:
       - name: Checkout isolated research branch
         uses: actions/checkout@v4
@@ -35,11 +35,13 @@ jobs:
           use-mathlib-cache: auto
           use-github-cache: true
 
-      - name: Build determinant multiplicity dependency
+      - name: Build determinant and Sylvester dependencies
         shell: bash
         run: |
           cd proximity-prize
-          lake build ProximityPrize.SubmissionLower.MatrixRootMultiplicity
+          lake build \
+            ProximityPrize.SubmissionLower.MatrixRootMultiplicity \
+            ProximityPrize.SubmissionLower.PlaneResultantPointCount
 
       - name: Kernel-check abstract Stage 3 files
         shell: bash
@@ -48,10 +50,13 @@ jobs:
             PHJ_FRI_K14_Arithmetic.lean \
             PHJ_FRI_SeedAnchored.lean \
             PHJ_FRI_FiniteAlgebraProjection.lean \
+            PHJ_FRI_SylvesterQuotientLength.lean \
             PHJ_FRI_ResultantMultiplicityLedger.lean \
             PHJ_FRI_IrreducibleFactorMultiplicity.lean \
             PHJ_FRI_PrimeFactorDegreeLedger.lean \
             PHJ_FRI_ClosedPointResultantLedger.lean \
+            PHJ_FRI_FiberComponentLength.lean \
+            PHJ_FRI_ClosedPointTowerLength.lean \
             PHJ_FRI_M14_ConditionalArithmetic.lean \
             PHJ_FRI_M14_SharpConditionalArithmetic.lean; do
             cp "research/phj-fri-stage3/$f" "proximity-prize/$f"
@@ -61,10 +66,13 @@ jobs:
             PHJ_FRI_K14_Arithmetic.lean \
             PHJ_FRI_SeedAnchored.lean \
             PHJ_FRI_FiniteAlgebraProjection.lean \
+            PHJ_FRI_SylvesterQuotientLength.lean \
             PHJ_FRI_ResultantMultiplicityLedger.lean \
             PHJ_FRI_IrreducibleFactorMultiplicity.lean \
             PHJ_FRI_PrimeFactorDegreeLedger.lean \
             PHJ_FRI_ClosedPointResultantLedger.lean \
+            PHJ_FRI_FiberComponentLength.lean \
+            PHJ_FRI_ClosedPointTowerLength.lean \
             PHJ_FRI_M14_ConditionalArithmetic.lean \
             PHJ_FRI_M14_SharpConditionalArithmetic.lean; do
             lake env lean "$f" 2>&1 | tee "../${f%.lean}.log"
