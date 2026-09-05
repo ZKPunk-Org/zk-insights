@@ -55,6 +55,7 @@ jobs:
             PHJ_FRI_FiniteAlgebraProjection.lean \
             PHJ_FRI_PoleBoundedCoordinate.lean \
             PHJ_FRI_SylvesterQuotientLength.lean \
+            PHJ_FRI_ResultantFiberLength.lean \
             PHJ_FRI_ResultantMultiplicityLedger.lean \
             PHJ_FRI_DirectThreshold.lean \
             PHJ_FRI_M14_ConditionalArithmetic.lean \
@@ -74,6 +75,7 @@ jobs:
             PHJ_FRI_FiniteAlgebraProjection.lean \
             PHJ_FRI_PoleBoundedCoordinate.lean \
             PHJ_FRI_SylvesterQuotientLength.lean \
+            PHJ_FRI_ResultantFiberLength.lean \
             PHJ_FRI_ResultantMultiplicityLedger.lean \
             PHJ_FRI_DirectThreshold.lean \
             PHJ_FRI_M14_ConditionalArithmetic.lean \
