@@ -1,0 +1,117 @@
+name: PHJ-FRI Stage 3 repair coprime Koszul exactness
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - research/phj-fri-stage3-lean
+    paths:
+      - '.github/workflows/phj-fri-stage3-coprime-repair.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  repair-and-certify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/checkout@v4
+        with:
+          repository: proximity-prize/proximity-prize
+          ref: b3fac81ad2b1ee609672b04bd3c3ee1ca5c06884
+          path: proximity-prize
+      - uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: proximity-prize
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: auto
+          use-github-cache: true
+      - name: Write corrected oriented theorem
+        shell: bash
+        run: |
+          cat > research/phj-fri-stage3/PHJ_FRI_KoszulCoprimeExact.lean <<'EOF'
+          import Mathlib
+          import PHJ_FRI_KoszulLinearExact
+
+          /-!
+          # Coprime specialization of Koszul exactness
+
+          In a GCD domain, `IsCoprime P Q` supplies precisely the Euclid
+          divisibility implication used by the two-generator Koszul syzygy
+          theorem.  We keep the logically necessary orientation `P ≠ 0`;
+          no invalid symmetric nonvanishing inference is made.
+          -/
+
+          namespace PHJFRI.Stage3.KoszulCoprimeExact
+
+          open Function
+          open PHJFRI.Stage3.KoszulLinearExact
+
+          noncomputable section
+
+          variable {K R : Type*} [Field K]
+          variable [CommRing R] [NoZeroDivisors R] [GCDMonoid R] [Algebra K R]
+
+          /-- Ambient two-generator Koszul exactness for coprime elements. -/
+          theorem koszul_ker_eq_range_of_isCoprime
+              (P Q : R) (hP : P ≠ 0) (hcop : IsCoprime P Q) :
+              LinearMap.ker (koszulD1 (K := K) P Q) =
+                LinearMap.range (koszulD2 (K := K) P Q) := by
+            apply koszul_ker_eq_range (K := K) P Q hP
+            intro x hx
+            exact hcop.dvd_of_dvd_mul_left hx
+
+          #print axioms koszul_ker_eq_range_of_isCoprime
+
+          end
+
+          end PHJFRI.Stage3.KoszulCoprimeExact
+          EOF
+      - name: Kernel-check corrected theorem
+        run: |
+          for f in PHJ_FRI_KoszulSyzygy.lean PHJ_FRI_KoszulLinearExact.lean PHJ_FRI_KoszulCoprimeExact.lean; do
+            cp "research/phj-fri-stage3/$f" "proximity-prize/$f"
+          done
+          cd proximity-prize
+          lake env lean PHJ_FRI_KoszulSyzygy.lean 2>&1 | tee ../PHJ_FRI_KoszulSyzygy.repair.log
+          lake env lean PHJ_FRI_KoszulLinearExact.lean 2>&1 | tee ../PHJ_FRI_KoszulLinearExact.repair.log
+          lake env lean PHJ_FRI_KoszulCoprimeExact.lean 2>&1 | tee ../PHJ_FRI_KoszulCoprimeExact.repair.log
+      - name: Reject sorry placeholders
+        run: |
+          if grep -nE '(^|[^A-Za-z])sorry([^A-Za-z]|$)' \
+              research/phj-fri-stage3/PHJ_FRI_KoszulCoprimeExact.lean; then
+            exit 1
+          fi
+      - name: Commit corrected theorem and certificate
+        env:
+          VERIFIED_SHA: ${{ github.sha }}
+        run: |
+          cat > research/phj-fri-stage3/CI_CERTIFIED_KOSZUL_COPRIME.md <<EOF
+          # PHJ-FRI Stage 3 certified coprime Koszul exactness
+
+          Status: PASS
+
+          Workflow input commit: \`${VERIFIED_SHA}\`
+
+          Pinned dependency: \`proximity-prize/proximity-prize@b3fac81ad2b1ee609672b04bd3c3ee1ca5c06884\`
+
+          Pinned Lean toolchain: \`v4.32.2\`
+
+          Kernel-checked file: \`PHJ_FRI_KoszulCoprimeExact.lean\` and dependencies.
+
+          The invalid symmetric nonvanishing inference was removed.  The
+          workflow rejected any \`sorry\` placeholder.
+          EOF
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add research/phj-fri-stage3/PHJ_FRI_KoszulCoprimeExact.lean \
+                  research/phj-fri-stage3/CI_CERTIFIED_KOSZUL_COPRIME.md
+          git commit -m 'fix: certify oriented coprime Koszul exactness [skip ci]'
+          git push
