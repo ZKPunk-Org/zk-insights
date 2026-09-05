@@ -12,7 +12,7 @@ permissions:
 jobs:
   verify-stage3:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 55
     steps:
       - name: Checkout isolated research branch
         uses: actions/checkout@v4
@@ -39,57 +39,53 @@ jobs:
         shell: bash
         run: |
           cd proximity-prize
-          lake build ProximityPrize.SubmissionLower.CoordinateBoxZeroCount
+          lake build \
+            ProximityPrize.SubmissionLower.CoordinateBoxZeroCount \
+            ProximityPrize.SubmissionLower.PlaneResultantPointCount \
+            ProximityPrize.SubmissionLower.BCHKSBridge
 
-      - name: Kernel-check K14 arithmetic certificate
+      - name: Copy Stage 3 modules into pinned workspace
         shell: bash
         run: |
-          cp research/phj-fri-stage3/PHJ_FRI_K14_Arithmetic.lean \
-             proximity-prize/PHJ_FRI_K14_Arithmetic.lean
-          cd proximity-prize
-          lake env lean PHJ_FRI_K14_Arithmetic.lean 2>&1 | tee ../k14-lean-output.txt
+          for f in \
+            PHJ_FRI_K14_Arithmetic.lean \
+            PHJ_FRI_SeedAnchored.lean \
+            PHJ_FRI_AnchoredBoxZeroCount.lean \
+            PHJ_FRI_FrobeniusCoordinate.lean \
+            PHJ_FRI_FiniteAlgebraProjection.lean \
+            PHJ_FRI_PoleBoundedCoordinate.lean \
+            PHJ_FRI_SylvesterQuotientLength.lean \
+            PHJ_FRI_ResultantMultiplicityLedger.lean \
+            PHJ_FRI_DirectThreshold.lean \
+            PHJ_FRI_M14_ConditionalArithmetic.lean \
+            PHJ_FRI_M14_SharpConditionalArithmetic.lean; do
+            cp "research/phj-fri-stage3/$f" "proximity-prize/$f"
+          done
 
-      - name: Kernel-check seed-anchored lemmas
+      - name: Kernel-check Stage 3 modules
         shell: bash
         run: |
-          cp research/phj-fri-stage3/PHJ_FRI_SeedAnchored.lean \
-             proximity-prize/PHJ_FRI_SeedAnchored.lean
           cd proximity-prize
-          lake env lean PHJ_FRI_SeedAnchored.lean 2>&1 | tee ../seed-anchored-lean-output.txt
-
-      - name: Kernel-check one-anchor zero count
-        shell: bash
-        run: |
-          cp research/phj-fri-stage3/PHJ_FRI_AnchoredBoxZeroCount.lean \
-             proximity-prize/PHJ_FRI_AnchoredBoxZeroCount.lean
-          cd proximity-prize
-          lake env lean PHJ_FRI_AnchoredBoxZeroCount.lean 2>&1 | tee ../anchored-zero-count-output.txt
-
-      - name: Kernel-check Frobenius-coordinate pole budget
-        shell: bash
-        run: |
-          cp research/phj-fri-stage3/PHJ_FRI_FrobeniusCoordinate.lean \
-             proximity-prize/PHJ_FRI_FrobeniusCoordinate.lean
-          cd proximity-prize
-          lake env lean PHJ_FRI_FrobeniusCoordinate.lean 2>&1 | tee ../frobenius-coordinate-output.txt
-
-      - name: Kernel-check finite-algebra projection budget
-        shell: bash
-        run: |
-          cp research/phj-fri-stage3/PHJ_FRI_FiniteAlgebraProjection.lean \
-             proximity-prize/PHJ_FRI_FiniteAlgebraProjection.lean
-          cd proximity-prize
-          lake env lean PHJ_FRI_FiniteAlgebraProjection.lean 2>&1 | tee ../finite-algebra-output.txt
+          for f in \
+            PHJ_FRI_K14_Arithmetic.lean \
+            PHJ_FRI_SeedAnchored.lean \
+            PHJ_FRI_AnchoredBoxZeroCount.lean \
+            PHJ_FRI_FrobeniusCoordinate.lean \
+            PHJ_FRI_FiniteAlgebraProjection.lean \
+            PHJ_FRI_PoleBoundedCoordinate.lean \
+            PHJ_FRI_SylvesterQuotientLength.lean \
+            PHJ_FRI_ResultantMultiplicityLedger.lean \
+            PHJ_FRI_DirectThreshold.lean \
+            PHJ_FRI_M14_ConditionalArithmetic.lean \
+            PHJ_FRI_M14_SharpConditionalArithmetic.lean; do
+            lake env lean "$f" 2>&1 | tee "../${f%.lean}.log"
+          done
 
       - name: Reject sorry placeholders
         shell: bash
         run: |
           if grep -nE '(^|[^A-Za-z])sorry([^A-Za-z]|$)' \
-              research/phj-fri-stage3/PHJ_FRI_K14_Arithmetic.lean \
-              research/phj-fri-stage3/PHJ_FRI_SeedAnchored.lean \
-              research/phj-fri-stage3/PHJ_FRI_AnchoredBoxZeroCount.lean \
-              research/phj-fri-stage3/PHJ_FRI_FrobeniusCoordinate.lean \
-              research/phj-fri-stage3/PHJ_FRI_FiniteAlgebraProjection.lean; then
+              research/phj-fri-stage3/*.lean; then
             echo 'Unexpected sorry placeholder found.' >&2
             exit 1
           fi
@@ -99,10 +95,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: phj-fri-stage3-lean-logs
-          path: |
-            k14-lean-output.txt
-            seed-anchored-lean-output.txt
-            anchored-zero-count-output.txt
-            frobenius-coordinate-output.txt
-            finite-algebra-output.txt
+          path: '*.log'
           if-no-files-found: warn
