@@ -97,7 +97,7 @@ def main() -> None:
         ("P.natDegree ≤ 131071 → 185354 ≤ support.card",
          "P.natDegree ≤ 131071 → 185055 ≤ support.card"),
         ("support 13", "support 14"),
-        ("2590770 ≤ 13 * support.card", "2590770 ≤ 14 * support.card"),
+        ("2409602 ≤ 13 * support.card", "2590770 ≤ 14 * support.card"),
     ]
     for old, new in replacements:
         replace_all(p, old, new)
