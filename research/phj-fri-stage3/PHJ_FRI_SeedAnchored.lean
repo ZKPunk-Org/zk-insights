@@ -29,7 +29,7 @@ theorem isSeparable_of_finrank_lt_expChar
     (hdegree : Module.finrank F E < p) :
     Algebra.IsSeparable F E := by
   rw [isSeparable_iff_finInsepDegree_eq_one]
-  obtain ⟨r, hr⟩ := Field.finInsepDegree_eq_pow F E p
+  obtain ⟨r, hr⟩ := finInsepDegree_eq_pow F E p
   rw [hr]
   by_cases hzero : r = 0
   · simp [hzero]
